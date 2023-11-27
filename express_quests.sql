@@ -1,3 +1,4 @@
+-- SQLBook: Code
 DROP TABLE IF EXISTS movies;
 
 CREATE TABLE movies (
