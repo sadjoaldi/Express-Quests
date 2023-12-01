@@ -42,7 +42,7 @@ describe("POST /api/movies", () => {
       title: "Star Wars",
       director: "George Lucas",
       year: "1977",
-      color: true,
+      color: "1",
       duration: 120,
     };
 
@@ -65,7 +65,7 @@ describe("POST /api/movies", () => {
     expect(movieInDatabase.title).toStrictEqual(newMovie.title);
     expect(movieInDatabase.director).toStrictEqual(newMovie.director);
     expect(movieInDatabase.year).toStrictEqual(newMovie.year);
-    expect(Boolean(movieInDatabase.color)).toStrictEqual(newMovie.color);
+    expect(movieInDatabase.color).toStrictEqual(newMovie.color);
     expect(movieInDatabase.duration).toStrictEqual(newMovie.duration);
 
     //* Pour tester le cas d'erreur: l'api retourne une erreur lorsque les propriétés du film posté (POST) sont manquants.*/
@@ -77,7 +77,8 @@ describe("POST /api/movies", () => {
       .post("/api/movies")
       .send(movieWithMissingProps);
 
-    expect(response.status).toEqual(500);
+    //* ajout  422*/
+    expect(response.status).toEqual(422);
   });
 });
 
@@ -117,6 +118,7 @@ describe("PUT /api/movies/:id", () => {
       .put(`/api/movies/${id}`)
       .send(updatedMovie);
 
+    //* ajout 422*/
     expect(response.status).toEqual(204);
 
     const [movies] = await database.query(
@@ -151,7 +153,7 @@ describe("PUT /api/movies/:id", () => {
       .put(`/api/movies/1`)
       .send(movieWithMissingProps);
 
-    expect(response.status).toEqual(500);
+    expect(response.status).toEqual(422);
   });
 
   it("should return no movie", async () => {
