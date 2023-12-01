@@ -28,4 +28,9 @@ app.put("/api/movies/:id", validateMovie, movieControllers.putMovie);
 app.put("/api/users/:id", validateUser, userControllers.putUser);
 //*ajout middleware put*/
 
+//*delete*/
+app.delete("/api/movies/:id", movieControllers.deleteMovie);
+
+app.delete("/api/users/:id", userControllers.deleteUser);
+
 module.exports = app;
